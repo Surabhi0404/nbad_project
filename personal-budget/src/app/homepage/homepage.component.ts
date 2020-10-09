@@ -33,19 +33,30 @@ export class HomepageComponent implements AfterViewInit {
 
 public data = [];
 public labelText = [];
+private svg;
+  private margin = 50;
+  private width = 350;
+  private height = 400;
+  // The radius of the pie chart is half the smallest side
+  private radius = Math.min(this.width, this.height) / 2 - this.margin;
+  private colors;
 
   constructor(private http: HttpClient, private budgetData: DataService) {   }
 
   ngAfterViewInit() {
     this.budgetData.getData().subscribe(data =>{
+      this.data = data.myBudget;
       for (var i = 0 ; i < data.myBudget.length; i++) {
             this.dataSource.datasets[0].data[i] = data.myBudget[i].budget;
              this.dataSource.labels[i] = data.myBudget[i].title;
-             this.data[i] = data.myBudget[i].budget;
+            //  this.data[i] = data.myBudget[i].budget;
              this.labelText[i] = data.myBudget[i].title;
     }
     this.createChart();
-    this.getD3Chart();
+    this.createSvg();
+    this.createColors();
+    this.drawChart();
+
   });
   }
 
@@ -55,63 +66,81 @@ public labelText = [];
         type: 'pie',
         data: this.dataSource
     });
-    debugger;
   }
 
-  getD3Chart(){
-        var svg = d3.select('svg'),
-        width = svg.attr('width'),
-        height = svg.attr('height'),
-        radius = Math.min(width, height) / 2,
-        g = svg.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+  private createSvg(): void {
+    this.svg = d3.select("figure#pie")
+    .append("svg")
+    .attr("width", this.width)
+    .attr("height", this.height)
+    .append("g")
+    .attr(
+      "transform",
+      "translate(" + this.width / 2 + "," + this.height / 2 + ")"
+    );
+}
+private createColors(): void {
+  this.colors = d3.scaleOrdinal()
+  .domain(this.data.map(d => d.budget.toString()))
+  .range(["#ffcd56", "#ff6384", "#36a2eb", "#fd6b19", "#9A7D0A", "#27AE60", "#D0D3D4", "#34495E" ]);
+}
+private drawChart(): void {
+  // Compute the position of each group on the pie:
+  const pie = d3.pie<any>().value((d: any) => Number(d.budget));
 
-        var color = d3.scaleOrdinal(['#4daf4a', '#377eb8', '#ff7f00', '#984ea3', '#e41a1c', '#A3E4D7', '#F1C40F', '#1B4F72']);
+  // Build the pie chart
+  this.svg
+  .selectAll('pieces')
+  .data(pie(this.data))
+  .enter()
+  .append('path')
+  .attr('d', d3.arc()
+    .innerRadius(0)
+    .outerRadius(this.radius)
+  )
+  .attr('fill', (d, i) => (this.colors(i)))
+  .attr("stroke", "#121926")
+  .style("stroke-width", "1px");
 
-        // Generate the pie
-        var pie = d3.pie();
+  // Add labels
+  const labelLocation = d3.arc()
+  .innerRadius(100)
+  .outerRadius(this.radius);
 
-        // Generate the arcs
-        var arc = d3.arc()
-                    .innerRadius(0)
-                    .outerRadius(radius);
+  this.svg
+  .selectAll('pieces')
+  .data(pie(this.data))
+  .enter()
+  .append('text')
+  .text(d => d.data.title)
+  .attr("transform", d => "translate(" + labelLocation.centroid(d) + ")")
+  .style("text-anchor", "middle")
+  .style("font-size", 15);
 
-        //Generate groups
-        var arcs = g.selectAll('arc')
-                    .data(pie(this.data))
-                    .enter()
-                    .append('g')
-                    .attr('class', 'arc')
+  // var legendG = this.svg.selectAll(".legend") //
+  //                           .data(pie(this.data))
+  //                           .enter().append("g")
+  //                           .attr("transform", function(d,i){
+  //                               return "translate(" + (this.width - 400) + "," + (i * 15 + 20) + ")"; // place each legend on the right and bump each one down 15 pixels
+  //                           })
+  //                           .attr("class", "legend");
+
+  //                           legendG.append("rect") // make a matching color rect
+  //                           .attr("width", 10)
+  //                           .attr("height", 10)
+  //                           .attr("fill", function(d, i) {
+  //                               return this.colors(i);
+  //                           });
+
+  //                           legendG.append("text") // add the text
+  //                           .text(function(d,i){
+  //                               return this.labelText[i];
+  //                           })
+  //                           .style("font-size", 12)
+  //                           .attr("y", 10)
+  //                           .attr("x", 11);
 
 
-        //Draw arc paths
-        arcs.append('path')
-            .attr('fill', function(d, i) {
-                return color(i);
-            })
-            .attr('d', arc);
+}
 
-        const legendG = svg.selectAll('.legend') //
-            .data(pie(this.data))
-            .enter().append('g')
-            .attr('transform', function(d, i){
-                return 'translate(' + (width - 70) + ',' + (i * 15 + 20) + ')'; // place each legend on the right and bump each one down 15 pixels
-            })
-            .attr('class', 'legend');
-
-        legendG.append('rect') // make a matching color rect
-            .attr('width', 10)
-            .attr('height', 10)
-            .attr('fill', function(d, i) {
-                return color(i);
-            });
-
-        legendG.append('text') // add the text
-            .text('transform', function(d, i){
-                return this.labelText[i];
-            })
-            .style('font-size', 12)
-            .attr('y', 10)
-            .attr('x', 11);
-
-      }
 }
