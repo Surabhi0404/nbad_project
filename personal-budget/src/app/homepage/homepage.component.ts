@@ -35,9 +35,8 @@ public data = [];
 public labelText = [];
 private svg;
   private margin = 50;
-  private width = 350;
-  private height = 400;
-  // The radius of the pie chart is half the smallest side
+  private width = 500;
+  private height = 800;
   private radius = Math.min(this.width, this.height) / 2 - this.margin;
   private colors;
 
@@ -49,8 +48,6 @@ private svg;
       for (var i = 0 ; i < data.myBudget.length; i++) {
             this.dataSource.datasets[0].data[i] = data.myBudget[i].budget;
              this.dataSource.labels[i] = data.myBudget[i].title;
-            //  this.data[i] = data.myBudget[i].budget;
-             this.labelText[i] = data.myBudget[i].title;
     }
     this.createChart();
     this.createSvg();
@@ -85,10 +82,8 @@ private createColors(): void {
   .range(["#ffcd56", "#ff6384", "#36a2eb", "#fd6b19", "#9A7D0A", "#27AE60", "#D0D3D4", "#34495E" ]);
 }
 private drawChart(): void {
-  // Compute the position of each group on the pie:
   const pie = d3.pie<any>().value((d: any) => Number(d.budget));
 
-  // Build the pie chart
   this.svg
   .selectAll('pieces')
   .data(pie(this.data))
@@ -102,7 +97,6 @@ private drawChart(): void {
   .attr("stroke", "#121926")
   .style("stroke-width", "1px");
 
-  // Add labels
   const labelLocation = d3.arc()
   .innerRadius(100)
   .outerRadius(this.radius);
@@ -116,31 +110,6 @@ private drawChart(): void {
   .attr("transform", d => "translate(" + labelLocation.centroid(d) + ")")
   .style("text-anchor", "middle")
   .style("font-size", 15);
-
-  // var legendG = this.svg.selectAll(".legend") //
-  //                           .data(pie(this.data))
-  //                           .enter().append("g")
-  //                           .attr("transform", function(d,i){
-  //                               return "translate(" + (this.width - 400) + "," + (i * 15 + 20) + ")"; // place each legend on the right and bump each one down 15 pixels
-  //                           })
-  //                           .attr("class", "legend");
-
-  //                           legendG.append("rect") // make a matching color rect
-  //                           .attr("width", 10)
-  //                           .attr("height", 10)
-  //                           .attr("fill", function(d, i) {
-  //                               return this.colors(i);
-  //                           });
-
-  //                           legendG.append("text") // add the text
-  //                           .text(function(d,i){
-  //                               return this.labelText[i];
-  //                           })
-  //                           .style("font-size", 12)
-  //                           .attr("y", 10)
-  //                           .attr("x", 11);
-
-
 }
 
 }
