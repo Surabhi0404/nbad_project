@@ -1,3 +1,4 @@
+import { AngularMaterialModule } from './angular-material.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,6 +15,11 @@ import { LoginComponent } from './login/login.component';
 import { P404Component } from './p404/p404.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { ContactComponent } from './contact/contact.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RegisterComponent } from './register/register.component';
+import { FormsModule } from '@angular/forms';
+import {AngularFireModule} from '@angular/fire';
+
 
 @NgModule({
   declarations: [
@@ -27,12 +33,25 @@ import { ContactComponent } from './contact/contact.component';
     LoginComponent,
     P404Component,
     BreadcrumbsComponent,
-    ContactComponent
+    ContactComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AngularMaterialModule,
+    FormsModule,
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyDn-5mqzI0528f28OOErkLhAGDQFCUSXy0",
+      authDomain: "fir-angular-auth-4f006.firebaseapp.com",
+      databaseURL: "https://fir-angular-auth-4f006.firebaseio.com",
+      projectId: "fir-angular-auth-4f006",
+      storageBucket: "fir-angular-auth-4f006.appspot.com",
+      messagingSenderId: "695695178545",
+      appId: "1:695695178545:web:7b6b9ba189e45bcc89ce10"
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],
