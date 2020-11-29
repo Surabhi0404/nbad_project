@@ -8,9 +8,13 @@ import { FirebaseService } from '../services/firebase.service';
 })
 export class LoginComponent implements OnInit {
   isSignedIn = false;
+  authError: any;
   constructor(public firebaseService: FirebaseService ) {}
 
   ngOnInit(): void {
+    this.firebaseService.eventAuthError$.subscribe(data =>{
+      this.authError = data;
+    });
     if (localStorage.getItem('user') !== null) {
     this.isSignedIn = true;
     }

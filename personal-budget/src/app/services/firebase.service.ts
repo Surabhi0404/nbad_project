@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
+  private eventAuthError = new BehaviorSubject<string>("");
+  eventAuthError$ = this.eventAuthError.asObservable();
 
   isLoggedIn = false;
   constructor(public firebaseAuth: AngularFireAuth) { }
@@ -15,7 +18,7 @@ export class FirebaseService {
       localStorage.setItem('user', JSON.stringify(res.user));
     })
     .catch(err =>{
-      console.log(err);
+      this.eventAuthError.next(err);
     });
   }
 
@@ -25,7 +28,7 @@ export class FirebaseService {
       this.isLoggedIn = true;
       localStorage.setItem('user', JSON.stringify(res.user));
     }).catch(err =>{
-      console.log(err.message);
+      this.eventAuthError.next(err);
     });
   }
 
