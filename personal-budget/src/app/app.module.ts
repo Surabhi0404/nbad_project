@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from './register/register.component';
 import { FormsModule } from '@angular/forms';
 import {AngularFireModule} from '@angular/fire';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import {AngularFireModule} from '@angular/fire';
       storageBucket: "fir-angular-auth-4f006.appspot.com",
       messagingSenderId: "695695178545",
       appId: "1:695695178545:web:7b6b9ba189e45bcc89ce10"
-    })
+    }),
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent],

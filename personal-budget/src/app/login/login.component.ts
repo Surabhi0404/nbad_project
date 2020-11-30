@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { FirebaseService } from '../services/firebase.service';
+import {Router} from '@angular/router';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'pb-login',
@@ -8,30 +10,32 @@ import { FirebaseService } from '../services/firebase.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
   isSignedIn = false;
   authError: any;
-  constructor(public firebaseService: FirebaseService ) {}
-
-  private loginFlag = new BehaviorSubject<boolean>(false);
-  loginFlag$ = this.loginFlag.asObservable();
+  constructor(public firebaseService: FirebaseService, private router: Router ) {}
 
   ngOnInit(): void {
     this.firebaseService.eventAuthError$.subscribe(data =>{
       this.authError = data;
     });
-    if (localStorage.getItem('user') !== null) {
-    this.isSignedIn = true;
-    }
-    else {
-    this.isSignedIn = false;
-    }
+    // if (localStorage.getItem('user') !== null) {
+    // this.isSignedIn = true;
+    // }
+    // else {
+    // this.isSignedIn = false;
+    // }
+    window.setTimeout(() => {
+    $('.alert').fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+    });
+}, 5000);
   }
 
   async onSignup(email: string, password: string){
     await this.firebaseService.signup(email, password);
     if (this.firebaseService.isLoggedIn) {
     this.isSignedIn = true;
-    this.loginFlag.next(this.isSignedIn);
     }
   }
 
@@ -39,14 +43,14 @@ export class LoginComponent implements OnInit {
     await this.firebaseService.signin(email, password);
     if (this.firebaseService.isLoggedIn) {
     this.isSignedIn = true;
-    this.loginFlag.next(this.isSignedIn);
     }
   }
 
   handleLogout(){
     this.isSignedIn = false;
-    this.loginFlag.next(this.isSignedIn);
-
+    this.authError="";
+    this.router.navigate(['/']);
   }
+
 
 }

@@ -17,8 +17,9 @@ export class FirebaseService {
     .then(res => {
       this.isLoggedIn = true;
       localStorage.setItem('user', JSON.stringify(res.user));
+      console.log(res.user);
     })
-    .catch(err =>{
+    .catch(err => {
       this.eventAuthError.next(err);
     });
   }
@@ -33,9 +34,9 @@ export class FirebaseService {
     });
   }
 
-  logout(){
-    this.firebaseAuth.signOut();
+  async logout(){
+    await this.firebaseAuth.signOut();
+    this.isLoggedIn = false;
     localStorage.removeItem('user');
-    this.router.navigate(['/']);
   }
 }

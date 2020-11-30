@@ -13,7 +13,7 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  logout():void{
+  logout(): void{
     this.firebaseService.logout();
     this.isLogout.emit();
 
