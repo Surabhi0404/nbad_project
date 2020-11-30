@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { FirebaseService } from '../services/firebase.service';
 
 @Component({
@@ -10,6 +11,9 @@ export class LoginComponent implements OnInit {
   isSignedIn = false;
   authError: any;
   constructor(public firebaseService: FirebaseService ) {}
+
+  private loginFlag = new BehaviorSubject<boolean>(false);
+  loginFlag$ = this.loginFlag.asObservable();
 
   ngOnInit(): void {
     this.firebaseService.eventAuthError$.subscribe(data =>{
@@ -27,6 +31,7 @@ export class LoginComponent implements OnInit {
     await this.firebaseService.signup(email, password);
     if (this.firebaseService.isLoggedIn) {
     this.isSignedIn = true;
+    this.loginFlag.next(this.isSignedIn);
     }
   }
 
@@ -34,11 +39,14 @@ export class LoginComponent implements OnInit {
     await this.firebaseService.signin(email, password);
     if (this.firebaseService.isLoggedIn) {
     this.isSignedIn = true;
+    this.loginFlag.next(this.isSignedIn);
     }
   }
 
   handleLogout(){
     this.isSignedIn = false;
+    this.loginFlag.next(this.isSignedIn);
+
   }
 
 }

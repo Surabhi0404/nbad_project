@@ -6,6 +6,11 @@
   height: 100%;
   display: block;
   overflow: hidden;
+  background-color: #b4c6f0;
+  background-image: url('/assets/bg.png');
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: center bottom;
 }
 
 mat-card {

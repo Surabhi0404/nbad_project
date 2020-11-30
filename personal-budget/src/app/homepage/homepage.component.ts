@@ -14,18 +14,13 @@ import { FirebaseService } from '../services/firebase.service';
 export class HomepageComponent implements OnInit {
 
 
-  @Output() isLogout = new EventEmitter<void>();
+
   constructor(public firebaseService: FirebaseService) {   }
 
   ngOnInit(): void {
 
   }
 
-  logout():void{
-    this.firebaseService.logout();
-    this.isLogout.emit();
-
-  }
 
 
 
