@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FirebaseService } from '../services/firebase.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'pb-about',
@@ -8,9 +9,12 @@ import { FirebaseService } from '../services/firebase.service';
 })
 
 export class AboutComponent implements OnInit {
-  constructor(public firebaseService: FirebaseService) { }
+  constructor(public firebaseService: FirebaseService, private budget: DataService) { }
 
   ngOnInit(): void {
+    this.budget.getData().subscribe(data => {
+      console.log(data);
+    });
   }
 
 }
