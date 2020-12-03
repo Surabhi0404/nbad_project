@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { FirebaseService } from '../services/firebase.service';
 import {Router} from '@angular/router';
 import * as $ from 'jquery';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'pb-login',
@@ -13,7 +14,8 @@ export class LoginComponent implements OnInit {
 
   isSignedIn = false;
   authError: any;
-  constructor(public firebaseService: FirebaseService, private router: Router ) {}
+  public currentUser: any;
+  constructor(public firebaseService: FirebaseService, private router: Router, private dataService: DataService ) {}
 
   ngOnInit(): void {
     this.firebaseService.eventAuthError$.subscribe(data =>{
@@ -44,6 +46,10 @@ export class LoginComponent implements OnInit {
     await this.firebaseService.signin(email, password);
     if (this.firebaseService.isLoggedIn) {
     this.isSignedIn = true;
+    this.dataService.getUser(email).subscribe(res =>{
+      this.currentUser=res;
+      console.log(this.currentUser);
+    });
     }
   }
 

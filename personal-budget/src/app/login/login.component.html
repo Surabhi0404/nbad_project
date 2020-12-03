@@ -134,4 +134,6 @@
     </mat-tab-group>
   </mat-card>
 </div>
-<pb-menu *ngIf="isSignedIn"(isLogout)="handleLogout()"></pb-menu>
+<div *ngFor="let user of currentUser">
+  <pb-menu [user]="user" *ngIf="isSignedIn"(isLogout)="handleLogout()"></pb-menu>
+</div>

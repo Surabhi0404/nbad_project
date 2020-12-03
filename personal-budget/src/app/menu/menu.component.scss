@@ -11,6 +11,7 @@ nav.menu ul li {
   padding: 0 ;
   list-style: none;
   display: inline-block;
+  align-items: center;
 }
 
 nav.menu ul li a {
@@ -22,6 +23,17 @@ nav.menu ul li a {
   color: #fff;
   margin: 0;
 
+}
+
+nav.menu ul li p {
+  display: block;
+  padding: 0 20px;
+  line-height: 44px;
+  font-size: 1.4em;
+  text-decoration: none;
+  box-align: center;
+  color: #fff;
+  margin: 0;
 }
 
 nav.menu ul li a:hover  {

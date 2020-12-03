@@ -17,9 +17,9 @@ var pool = mysql.createPool({
   database: "budget",
 });
 
-app.get("/budget", async (req, res) => {
+app.get("/api/budget/fetch/:user_id", async (req, res) => {
   pool.getConnection(function(err, connection) {
-  connection.query("SELECT * FROM budget_list", function (error, results, fields) {
+  connection.query("SELECT * FROM budget_list WHERE user_id='"+req.params.user_id+"'", function (error, results, fields) {
     connection.release();
     if (error) throw error;
     res.json(results);
@@ -27,35 +27,43 @@ app.get("/budget", async (req, res) => {
 });
 });
 
-app.post("/api/add", async(req, res) => {
-  connection.connect();
-  var sql = "INSERT INTO customers (name, address) VALUES ?";
-  var values = req.body;
-  connection.query(sql, [values], function (error, results, fields) {
-    connection.end();
+app.post("/api/budget/add", async(req, res) => {
+  pool.getConnection(function(err, connection) {
+  connection.query('INSERT INTO budget_list (title, expense, category_id, user_id, add_date) VALUES (?, ?, ?, ?, ?)',
+  [req.body.title, req.body.expense, req.body.category_id, req.body.user_id, new Date().toISOString().slice(0, 19).replace("T", " ")],
+  function (error, results, fields) {
+    connection.release();
     if (error) throw error;
     res.json(results);
   });
 });
 
-app.put("/api/edit", async(req, res) =>{
-  connection.connect();
-  var sql = "UPDATE emp SET FROM customers WHERE id ="+req.params.id;
-  connection.query(sql, function (error, results, fields) {
-    connection.end();
+});
+
+app.put("/api/budget/edit", async(req, res) =>{
+  var values = [req.body.title, req.body.expense, req.body.category_id, req.body.user_id, new Date().toISOString().slice(0, 19).replace("T", " "), req.body.budget_id];
+  var sql = "UPDATE budget_list SET title=?, expense=?, category_id=?, user_id=?, add_date=?"+" WHERE budget_id =?";
+  pool.getConnection(function(err, connection) {
+
+  connection.query(sql, values, function (error, results, fields) {
+    connection.release();
     if (error) throw error;
     res.json(results);
   });
 });
 
-app.delete("/api/delete/:id", async(req, res) => {
-  connection.connect();
-  var sql = "DELETE FROM customers WHERE id ="+req.params.id;
+});
+
+app.delete("/api/budget/delete/:budget_id", async(req, res) => {
+  var sql = "DELETE FROM budget_list WHERE budget_id ="+req.params.budget_id;
+  pool.getConnection(function(err, connection) {
   connection.query(sql, function (error, results, fields) {
-    connection.end();
+    connection.release();
     if (error) throw error;
     res.json(results);
   });
+});
+
 });
 
 app.post("/api/signup", async (req, res) => {
@@ -83,6 +91,41 @@ app.post("/api/signup", async (req, res) => {
     res.status(500).send(e);
   }
 });
+
+app.get("/api/user/:email", async (req, res) => {
+  pool.getConnection(function(err, connection) {
+  connection.query("SELECT * FROM user_list WHERE email = '"+ req.params.email+"'", function (error, results, fields) {
+    connection.release();
+    if (error) throw error;
+    res.json(results);
+  });
+});
+});
+
+app.get("/api/user_id/:user_id", async (req, res) => {
+  var sql = "SELECT user_id FROM user_list WHERE user_id ="+req.params.user_id;
+  pool.getConnection(function(err, connection) {
+    connection.query(sql, function (error, results, fields) {
+      connection.end();
+      if (error) throw error;
+      res.json(results);
+  });
+});
+});
+
+
+app.get("/api/category_id/:category_id", async (req, res) => {
+  var sql = "SELECT category_id FROM category_list WHERE user_id ="+req.params.category_id;
+  pool.getConnection(function(err, connection) {
+    connection.query(sql, function (error, results, fields) {
+      connection.end();
+      if (error) throw error;
+      res.json(results);
+  });
+});
+});
+
+
 
 app.listen(port, () => {
   console.log(`Server on port ${port}`);

@@ -9,7 +9,11 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  getData(): Observable<any>{
-    return this.http.get('http://localhost:3000/budget');
+  getData(user_id:any): Observable<any>{
+    return this.http.get('http://localhost:3000/api/budget/fetch/'+user_id);
+  }
+
+  getUser(email: string): Observable<any>{
+    return this.http.get('http://localhost:3000/api/user/' + email);
   }
 }

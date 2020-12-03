@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import {Router} from '@angular/router';
 import * as firebase from 'firebase';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { DataService } from './data.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,9 +12,10 @@ export class FirebaseService {
   private eventAuthError = new BehaviorSubject<string>('');
   eventAuthError$ = this.eventAuthError.asObservable();
 
+  public currentUser: any;
   isLoggedIn = false;
   userToken: any;
-  constructor(public firebaseAuth: AngularFireAuth, private router: Router, private http: HttpClient) { }
+  constructor(public firebaseAuth: AngularFireAuth, private router: Router, private http: HttpClient, private dataService: DataService) { }
   httpOptions: {headers: HttpHeaders} ={
     headers: new HttpHeaders({'Content-Type': 'application/json'}),
   };

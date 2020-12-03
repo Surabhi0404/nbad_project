@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FirebaseService } from '../services/firebase.service';
 import { DataService } from '../services/data.service';
 
@@ -9,12 +9,16 @@ import { DataService } from '../services/data.service';
 })
 
 export class AboutComponent implements OnInit {
-  constructor(public firebaseService: FirebaseService, private budget: DataService) { }
+  constructor(public firebaseService: FirebaseService) { }
+  @Input() budget: any;
 
   ngOnInit(): void {
-    this.budget.getData().subscribe(data => {
-      console.log(data);
-    });
+    // this.budget.getData().subscribe(data => {
+    //   console.log(data);
+    // });
+
+    console.log(this.budget);
+
   }
 
 }
