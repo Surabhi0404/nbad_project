@@ -1,14 +1,22 @@
 <nav class="menu" role="navigation">
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button (click)="logout()" mat-menu-item>
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
   <ul>
       <!-- <li><a [routerLink]="['/']">Home</a></li> Check this -->
       <!-- <li><a [routerLink]="['/about']">About</a></li>
       <li><a [routerLink]="['/contact']">Contact</a></li>
       <li><a [routerLink]="['/login']">Login</a></li> -->
-      <li> <a (click)="logout()">Logout</a></li>
       <li> <p>Welcome {{user.username}}!</p> </li>
       <li> <p>{{user.email}}</p></li>
   </ul>
 </nav>
-<pb-about [budget]="userBudget"></pb-about>
+<pb-about [user]="user"></pb-about>
 
 

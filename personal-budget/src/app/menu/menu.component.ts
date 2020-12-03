@@ -10,16 +10,11 @@ import { DataService } from '../services/data.service';
 
 
 export class MenuComponent implements OnInit {
-  userBudget: any;
   @Output() isLogout = new EventEmitter<void>();
-  constructor(public firebaseService: FirebaseService, private budget: DataService) { }
+  constructor(public firebaseService: FirebaseService) { }
 
   @Input() user: any;
   ngOnInit(): void {
-    this.budget.getData(this.user.user_id).subscribe(res=>{
-      this.userBudget=res;
-      console.log(this.userBudget);
-    });
   }
 
   logout(): void{

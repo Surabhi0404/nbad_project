@@ -1,11 +1,84 @@
-<div class="container center">
-  <div class="page-area">
-    <pb-article>
+<!-- <pb-article>
       <h1>Table</h1>
       <slot-two>
-        <p >{{budget}}</p>
-      </slot-two>
-    </pb-article>
+        <p >{{budget}}</p> -->
+<div>
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Position Column -->
+    <ng-container matColumnDef="budget_id">
+      <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.budget_id}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="expense">
+      <mat-header-cell *matHeaderCellDef> Expense </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.expense}} </mat-cell>
+    </ng-container>
+
+    <!-- Category Column -->
+    <ng-container matColumnDef="category_id">
+      <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.category_id}} </mat-cell>
+    </ng-container>
+
+    <!-- Month Column -->
+    <ng-container matColumnDef="add_date">
+      <mat-header-cell *matHeaderCellDef> Month </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.add_date}} </mat-cell>
+    </ng-container>
+
+    <!-- Month Column -->
+    <!-- <ng-container matColumnDef="user_id">
+            <mat-header-cell *matHeaderCellDef> User ID </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.user_id}} </mat-cell>
+          </ng-container> -->
+
+    <!-- Symbol Column -->
+    <!-- <ng-container matColumnDef="symbol">
+            <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.edit}} </mat-cell>
+          </ng-container> -->
+
+    <!-- Symbol Column -->
+    <!-- <ng-container matColumnDef="symbol">
+            <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.delete}} </mat-cell>
+          </ng-container> -->
+    <!-- actions -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="addNew()">
+          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="accent" (click)="startEdit(i, row.id, row.title, row.state, row.url, row.created_at, row.updated_at)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+
+        <button mat-icon-button color="accent" (click)="deleteItem(i, row.id, row.title, row.state, row.url)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+<!-- </slot-two>
+    </pb-article> -->
+<div class="container center">
+  <div class="page-area">
     <pb-article>
       <h1>Chart1</h1>
       <slot-two>
