@@ -20,6 +20,9 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule } from '@angular/forms';
 import {AngularFireModule} from '@angular/fire';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditDialogComponent } from './dialogs/edit/edit-dialog/edit-dialog.component';
+import { DeleteDialogComponent } from './dialogs/delete/delete-dialog/delete-dialog.component';
+import { AddDialogComponent } from './dialogs/add/add-dialog/add-dialog.component';
 
 
 @NgModule({
@@ -35,7 +38,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     P404Component,
     BreadcrumbsComponent,
     ContactComponent,
-    RegisterComponent
+    RegisterComponent,
+    EditDialogComponent,
+    DeleteDialogComponent,
+    AddDialogComponent
   ],
   imports: [
     BrowserModule,
