@@ -36,9 +36,9 @@
     </ng-container>
 
     <!-- Month Column -->
-    <ng-container matColumnDef="add_date">
-      <mat-header-cell *matHeaderCellDef> Month </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.add_date}} </mat-cell>
+    <ng-container matColumnDef="budget_date">
+      <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.budget_date | date: 'MM/dd/yyyy'}} </mat-cell>
     </ng-container>
 
     <!-- Month Column -->
@@ -67,11 +67,11 @@
       </mat-header-cell>
 
       <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="accent" (click)="startEdit(i, row.budget_id, row.title, row.expense, row.category, row.add_date)">
+        <button mat-icon-button color="accent" (click)="startEdit(i, row.budget_id, row.title, row.expense, row.category, row.budget_date)">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
 
-        <button mat-icon-button color="accent" (click)="deleteItem(i, row.id, row.title, row.state, row.url)">
+        <button mat-icon-button color="accent" (click)="deleteItem(i, row.budget_id, row.title, row.expense, row.category, row.budget_date)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>

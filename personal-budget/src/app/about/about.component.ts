@@ -5,13 +5,14 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { EditDialogComponent } from '../dialogs/edit/edit-dialog/edit-dialog.component';
+import { DeleteDialogComponent } from '../dialogs/delete/delete-dialog/delete-dialog.component';
 
 export interface BudgetElement {
   budget_id: string;
   title: number;
   expense: number;
   category: string;
-  add_date: string;
+  budget_date: string;
 }
 
 @Component({
@@ -22,7 +23,7 @@ export interface BudgetElement {
 
 export class AboutComponent implements OnInit {
   @Input() user: any;
-  displayedColumns: string[] = ['budget_id', 'title', 'expense', 'category', 'add_date', 'actions'];
+  displayedColumns: string[] = ['budget_id', 'title', 'expense', 'category', 'budget_date', 'actions'];
   dataSource: MatTableDataSource<BudgetElement>;
    index: string;
   id: string;
@@ -33,18 +34,19 @@ export class AboutComponent implements OnInit {
   ngOnInit() {
     this.dataService.getData(this.user.user_id).subscribe(
      data =>{ this.dataSource = new MatTableDataSource < BudgetElement > (data);
+        console.log(data);
               this.dataSource.paginator = this.paginator;
       }
     );
     }
 
-    startEdit(i: string, budget_id: string, title: string, expense: string, category: string, add_date: string) {
+    startEdit(i: string, budget_id: string, title: string, expense: string, category: string, budget_date: string) {
       this.id = budget_id;
       // index row is used just for debugging proposes and can be removed
       this.index = i;
       console.log(this.index);
       const dialogRef = this.dialog.open(EditDialogComponent, {
-        data: {budget_id: budget_id, title: title, expense: expense, category: category, add_date: add_date, user_id: this.user.user_id}
+        data: {budget_id: budget_id, title: title, expense: expense, category: category, budget_date: budget_date, user_id: this.user.user_id}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -58,6 +60,26 @@ export class AboutComponent implements OnInit {
         }
       });
     }
+
+    deleteItem(i: string, budget_id: string, title: string, expense: string, category: string, budget_date: string) {
+      this.index = i;
+      this.id = budget_id;
+      const dialogRef = this.dialog.open(DeleteDialogComponent, {
+        data: {budget_id: budget_id, title: title, expense: expense, category: category, budget_date:budget_date}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 1) {
+          const foundIndex = this.dataService.dataChange.value.findIndex(x => x.budget_id === this.id);
+          // for delete we use splice in order to remove single object from DataService
+          this.dataService.dataChange.value.splice(foundIndex, 1);
+          this.refresh();
+        }
+      });
+    }
+
+
+
     refresh() {
       this.dataService.getData(this.user.user_id).subscribe(
         data =>{ this.dataSource = new MatTableDataSource < BudgetElement > (data);

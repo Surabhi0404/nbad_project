@@ -36,8 +36,14 @@
 
     <div class="form">
       <mat-form-field color="accent">
-        <input matInput placeholder="Add Date" [(ngModel)]="data.add_date" name="add_date">
+        <!-- <input matInput placeholder="Add Date" [(ngModel)]="data.add_date" name="add_date"> -->
+
+        <input matInput [matDatepicker]="picker1" [max]="tomorrow" placeholder="Date" [(ngModel)]="data.budget_date" name="budget_date">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
       </mat-form-field>
+
+
     </div>
 <!--
     <div class="form">

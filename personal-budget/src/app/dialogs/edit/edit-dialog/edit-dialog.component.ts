@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataService } from 'src/app/services/data.service';
@@ -9,16 +9,17 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./edit-dialog.component.scss']
 })
 export class EditDialogComponent implements OnInit {
-
+  @Input() max: any;
+  tomorrow = new Date();
   constructor(public dialogRef: MatDialogRef<EditDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any, public dataService: DataService) { }
+              @Inject(MAT_DIALOG_DATA) public data: any, public dataService: DataService, ) {
+                this.tomorrow.setDate(this.tomorrow.getDate()); }
 
   formControl = new FormControl('', [
     Validators.required
     // Validators.email,
   ]);
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
   }
 
   getErrorMessage() {

@@ -29,8 +29,8 @@ app.get("/api/budget/fetch/:user_id", async (req, res) => {
 
 app.post("/api/budget/add", async(req, res) => {
   pool.getConnection(function(err, connection) {
-  connection.query('INSERT INTO budget_list (title, expense, category_id, user_id, add_date) VALUES (?, ?, ?, ?, ?)',
-  [req.body.title, req.body.expense, req.body.category_id, req.body.user_id, new Date().toISOString().slice(0, 19).replace("T", " ")],
+  connection.query('INSERT INTO budget_list (title, expense, category_id, user_id, add_date, budget_date) VALUES (?, ?, ?, ?, ?, ?)',
+  [req.body.title, req.body.expense, req.body.category_id, req.body.user_id, new Date().toISOString().slice(0, 19).replace("T", " "), req.body.budget_date],
   function (error, results, fields) {
     connection.release();
     if (error) throw error;
@@ -41,8 +41,8 @@ app.post("/api/budget/add", async(req, res) => {
 });
 
 app.put("/api/budget/edit", async(req, res) =>{
-  var values = [req.body.title, req.body.expense, req.body.category, req.body.user_id, new Date().toISOString().slice(0, 19).replace("T", " "), req.body.budget_id];
-  var sql = "UPDATE budget_list SET title=?, expense=?, category=?, user_id=?, add_date=?"+" WHERE budget_id =?";
+  var values = [req.body.title, req.body.expense, req.body.category, req.body.user_id, new Date().toISOString().slice(0, 19).replace("T", " "), new Date (req.body.budget_date).toISOString().split('T')[0],  req.body.budget_id];
+  var sql = "UPDATE budget_list SET title=?, expense=?, category=?, user_id=?, add_date=?, budget_date=?"+" WHERE budget_id =?";
   pool.getConnection(function(err, connection) {
 
   connection.query(sql, values, function (error, results, fields) {
