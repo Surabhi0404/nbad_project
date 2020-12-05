@@ -37,9 +37,8 @@ export class FirebaseService {
       this.isLoggedIn = true;
       localStorage.setItem('user', JSON.stringify(res.user));
       console.log(res.user);
-      this.http.post('http://localhost:3000/api/signup', JSON.stringify({'username': username, 'email': email, 'password': password}), this.httpOptions).subscribe(res => {
-        const response = res;
-      });
+      var user ={'username': username, 'email': email, 'password': password};
+      this.dataService.signUpUser(user).subscribe();
     }).catch(err =>{
       this.eventAuthError.next(err);
     });

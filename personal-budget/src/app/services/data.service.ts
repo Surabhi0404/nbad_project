@@ -38,4 +38,8 @@ export class DataService {
     this.dialogData = data;
     return this.http.post('http://localhost:3000/api/budget/add', data);
   }
+
+  signUpUser(data: any){
+    return this.http.post('http://localhost:3000/api/signup', data);
+  }
 }

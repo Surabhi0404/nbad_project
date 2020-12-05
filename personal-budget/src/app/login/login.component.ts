@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     await this.firebaseService.signup(username, email, password);
     if (this.firebaseService.isLoggedIn) {
     this.isSignedIn = true;
-    //console.log(await this.firebaseService.postUser(username, email, password));
+    this.onSignin(email, password);
     }
   }
 
