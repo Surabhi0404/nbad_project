@@ -41,8 +41,8 @@ app.post("/api/budget/add", async(req, res) => {
 });
 
 app.put("/api/budget/edit", async(req, res) =>{
-  var values = [req.body.title, req.body.expense, req.body.category_id, req.body.user_id, new Date().toISOString().slice(0, 19).replace("T", " "), req.body.budget_id];
-  var sql = "UPDATE budget_list SET title=?, expense=?, category_id=?, user_id=?, add_date=?"+" WHERE budget_id =?";
+  var values = [req.body.title, req.body.expense, req.body.category, req.body.user_id, new Date().toISOString().slice(0, 19).replace("T", " "), req.body.budget_id];
+  var sql = "UPDATE budget_list SET title=?, expense=?, category=?, user_id=?, add_date=?"+" WHERE budget_id =?";
   pool.getConnection(function(err, connection) {
 
   connection.query(sql, values, function (error, results, fields) {

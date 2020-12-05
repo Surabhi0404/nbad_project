@@ -1,13 +1,13 @@
 <div class="container">
-  <h3 mat-dialog-title>Issue id: {{data.id}}</h3>
+  <h3 mat-dialog-title>Budget ID: {{data.budget_id}}</h3>
 
   <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
 
     <div class="form">
-      <mat-form-field color="accent">
-        <input matInput #input class="form-control" placeholder="Id" [(ngModel)]="data.budget_id" name="id" required >
+      <!-- <mat-form-field color="accent">
+        <input matInput [readonly]="true" class="form-control" placeholder="Id" [(ngModel)]="data.budget_id" name="id" required>
         <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
     </div>
 
     <!--Textarea for demo purposes-->
@@ -21,21 +21,22 @@
     <!--Contains mat-hint for characters count and has maxLengt set-->
     <div class="form">
       <mat-form-field color="accent">
-        <input matInput #inputstate class="form-control" placeholder="State" [(ngModel)]="data.expense" name="state" maxlength="10" required >
+        <input matInput #inputstate type="number" class="example-right-align" placeholder="Expense" [(ngModel)]="data.expense" name="expense" required >
+        <span matPrefix>$&nbsp;</span>
+        <span matSuffix>.00</span>
         <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-        <mat-hint align = "end">{{inputstate.value?.length || 0}}/10</mat-hint>
       </mat-form-field>
     </div>
 
     <div class="form">
         <mat-form-field color="accent">
-          <input matInput placeholder="Url" [(ngModel)]="data.category_id" name="url">
+          <input matInput placeholder="Category" [(ngModel)]="data.category" name="category">
         </mat-form-field>
     </div>
 
     <div class="form">
       <mat-form-field color="accent">
-        <input matInput placeholder="Created at" [(ngModel)]="data.add_date" name="created_at">
+        <input matInput placeholder="Add Date" [(ngModel)]="data.add_date" name="add_date">
       </mat-form-field>
     </div>
 <!--

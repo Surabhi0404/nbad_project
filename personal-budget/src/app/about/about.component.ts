@@ -10,7 +10,7 @@ export interface BudgetElement {
   budget_id: string;
   title: number;
   expense: number;
-  category_id: string;
+  category: string;
   add_date: string;
 }
 
@@ -22,7 +22,7 @@ export interface BudgetElement {
 
 export class AboutComponent implements OnInit {
   @Input() user: any;
-  displayedColumns: string[] = ['budget_id', 'title', 'expense', 'category_id', 'add_date', 'actions'];
+  displayedColumns: string[] = ['budget_id', 'title', 'expense', 'category', 'add_date', 'actions'];
   dataSource: MatTableDataSource<BudgetElement>;
    index: string;
   id: string;
@@ -38,13 +38,13 @@ export class AboutComponent implements OnInit {
     );
     }
 
-    startEdit(i: string, budget_id: string, title: string, expense: string, category_id: string, add_date: string) {
+    startEdit(i: string, budget_id: string, title: string, expense: string, category: string, add_date: string) {
       this.id = budget_id;
       // index row is used just for debugging proposes and can be removed
       this.index = i;
       console.log(this.index);
       const dialogRef = this.dialog.open(EditDialogComponent, {
-        data: {budget_id: budget_id, title: title, expense: expense, category_id: category_id, add_date: add_date, user_id: this.user.user_id}
+        data: {budget_id: budget_id, title: title, expense: expense, category: category, add_date: add_date, user_id: this.user.user_id}
       });
 
       dialogRef.afterClosed().subscribe(result => {
