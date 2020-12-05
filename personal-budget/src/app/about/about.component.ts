@@ -6,8 +6,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { EditDialogComponent } from '../dialogs/edit/edit-dialog/edit-dialog.component';
 import { DeleteDialogComponent } from '../dialogs/delete/delete-dialog/delete-dialog.component';
+import { AddDialogComponent } from '../dialogs/add/add-dialog/add-dialog.component';
 
-export interface BudgetElement {
+export class BudgetElement {
   budget_id: string;
   title: number;
   expense: number;
@@ -38,6 +39,21 @@ export class AboutComponent implements OnInit {
               this.dataSource.paginator = this.paginator;
       }
     );
+    }
+
+    addNew() {
+      const dialogRef = this.dialog.open(AddDialogComponent, {
+        data: {budget: BudgetElement, user_id: this.user.user_id }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 1) {
+          // After dialog is closed we're doing frontend updates
+          // For add we're just pushing a new row inside DataService
+          this.dataService.dataChange.value.push(this.dataService.getDialogData());
+          this.refresh();
+        }
+      });
     }
 
     startEdit(i: string, budget_id: string, title: string, expense: string, category: string, budget_date: string) {

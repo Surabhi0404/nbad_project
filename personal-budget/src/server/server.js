@@ -29,8 +29,8 @@ app.get("/api/budget/fetch/:user_id", async (req, res) => {
 
 app.post("/api/budget/add", async(req, res) => {
   pool.getConnection(function(err, connection) {
-  connection.query('INSERT INTO budget_list (title, expense, category_id, user_id, add_date, budget_date) VALUES (?, ?, ?, ?, ?, ?)',
-  [req.body.title, req.body.expense, req.body.category_id, req.body.user_id, new Date().toISOString().slice(0, 19).replace("T", " "), req.body.budget_date],
+  connection.query('INSERT INTO budget_list (title, expense, user_id, add_date, budget_date, category) VALUES (?, ?, ?, ?, ?, ?)',
+  [req.body.title, req.body.expense, req.body.user_id, new Date().toISOString().slice(0, 19).replace("T", " "), new Date (req.body.budget_date).toISOString().split('T')[0], req.body.category],
   function (error, results, fields) {
     connection.release();
     if (error) throw error;

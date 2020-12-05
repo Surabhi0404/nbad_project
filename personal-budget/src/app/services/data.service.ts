@@ -33,4 +33,9 @@ export class DataService {
   getDialogData() {
     return this.dialogData;
   }
+
+  addBudget(data: any):Observable<any>{
+    this.dialogData = data;
+    return this.http.post('http://localhost:3000/api/budget/add', data);
+  }
 }
