@@ -398,6 +398,7 @@ div.hero h2 {
 .container {
   padding: 40px;
   width: 100%;
+  padding-bottom: 2.5rem;
 }
 
 .page-area {
@@ -410,6 +411,10 @@ footer.bottom {
   height: 50px;
   background-color: #b4c6f0;
   padding: 40px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
 }
 
 .center {

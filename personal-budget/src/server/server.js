@@ -118,7 +118,18 @@ app.get("/api/category_id/:category_id", async (req, res) => {
   var sql = "SELECT category_id FROM category_list WHERE user_id ="+req.params.category_id;
   pool.getConnection(function(err, connection) {
     connection.query(sql, function (error, results, fields) {
-      connection.end();
+      connection.release();
+      if (error) throw error;
+      res.json(results);
+  });
+});
+});
+
+app.get("/api/category/:user_id", async(req, res)=>{
+  var sql = "SELECT DISTINCT category, SUM(expense) as expense FROM budget_list WHERE user_id = "+req.params.user_id+" GROUP BY category";
+  pool.getConnection(function(err, connection) {
+    connection.query(sql, function (error, results, fields) {
+      connection.release();
       if (error) throw error;
       res.json(results);
   });

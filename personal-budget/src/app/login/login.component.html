@@ -56,9 +56,10 @@
             </form>
           </mat-card-content>
       </mat-tab>
+      <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
       <mat-tab label="Sign Up">
         <mat-card-content>
-          <form action="">
+
             <mat-form-field>
               <input
                 matInput
@@ -82,7 +83,7 @@
                 name="emailSignup"
                 ngModel
                 #emailSignup="ngModel">
-                <mat-error *ngIf="email.invalid">Email is required</mat-error>
+                <mat-error *ngIf="emailSignup.invalid">Email is required</mat-error>
               <mat-icon matSuffix>email</mat-icon>
             </mat-form-field>
             <mat-form-field>
@@ -96,11 +97,11 @@
                 ngModel
                 #passwordSingup="ngModel">
                 <mat-error
-                  *ngIf="password.errors && password.errors.required">
+                  *ngIf="passwordSingup.errors && passwordSingup.errors.required">
                   Password is required
                 </mat-error>
                 <mat-error
-                  *ngIf="password.errors && password.errors.minlength">
+                  *ngIf="passwordSingup.errors && passwordSingup.errors.minlength">
                   Password must be of length 6
                 </mat-error>
               <mat-icon matSuffix>lock</mat-icon>
@@ -109,28 +110,35 @@
             <mat-form-field>
                 <input
                 matInput
-                placeholder="Password"
+                placeholder="Confirm Password"
                 type="password"
                 required
                 minlength="6"
+                pattern="{{ passwordSingup.value }}"
                 name="repassword"
                 ngModel
-                #repassword="ngModel">
+                #repassword="ngModel"
+                >
                 <mat-error
-                  *ngIf="repassword.errors && repassword.errors.required && passwordSingup!=repassword">
+                  *ngIf="(repassword.errors && repassword.errors.required)">
                   Re-Enter Password is required
                 </mat-error>
-              <mat-icon matSuffix>lock</mat-icon>
+                <mat-error
+                  *ngIf="repassword.errors?.pattern">
+                  Password does not match
+              </mat-error>
+                <mat-icon matSuffix>lock</mat-icon>
             </mat-form-field>
-            <button (click) = "onSignup(username.value,emailSignup.value, passwordSingup.value)"
+            <button mat-button [disabled]="!formControl.valid" (click) = "onSignup(username.value,emailSignup.value, passwordSingup.value, repassword.value)"
               mat-raised-button
               color="primary"
               class="login-button">
               Sign Up
             </button>
-          </form>
         </mat-card-content>
       </mat-tab>
+    </form>
+
     </mat-tab-group>
   </mat-card>
 </div>

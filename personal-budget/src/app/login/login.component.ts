@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
 }, 5000);
   }
 
-  async onSignup(username: string, email: string, password: string){
+  async onSignup(username: string, email: string, password: string, repassword: string){
     await this.firebaseService.signup(username, email, password);
     if (this.firebaseService.isLoggedIn) {
     this.isSignedIn = true;
@@ -58,6 +58,4 @@ export class LoginComponent implements OnInit {
     this.authError="";
     this.router.navigate(['/']);
   }
-
-
 }
