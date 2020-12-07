@@ -11,6 +11,7 @@ import { DataService } from 'src/app/services/data.service';
 export class EditDialogComponent implements OnInit {
   @Input() max: any;
   tomorrow = new Date();
+  minDate = new Date(2020, 0, 1);
   constructor(public dialogRef: MatDialogRef<EditDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any, public dataService: DataService, ) {
                 this.tomorrow.setDate(this.tomorrow.getDate()); }

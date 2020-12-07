@@ -8,6 +8,7 @@ import { EditDialogComponent } from '../dialogs/edit/edit-dialog/edit-dialog.com
 import { DeleteDialogComponent } from '../dialogs/delete/delete-dialog/delete-dialog.component';
 import { AddDialogComponent } from '../dialogs/add/add-dialog/add-dialog.component';
 import { Chart } from 'chart.js';
+import * as moment from 'moment';
 
 
 export class BudgetElement {
@@ -26,6 +27,7 @@ export class BudgetElement {
 
 export class AboutComponent implements OnInit {
   myPieChart;
+  myBarChart;
   @Input() user: any;
   displayedColumns: string[] = ['budget_id', 'title', 'expense', 'category', 'budget_date', 'actions'];
   dataSource: MatTableDataSource<BudgetElement>;
@@ -57,6 +59,7 @@ export class AboutComponent implements OnInit {
                console.log(data);
                this.dataSource.paginator = this.paginator;
                this.createChart();
+               this.createBarChart();
 
       }
 
@@ -76,6 +79,7 @@ export class AboutComponent implements OnInit {
           this.dataService.dataChange.value.push(this.dataService.getDialogData());
           this.refresh();
           this.createChart();
+          this.createBarChart();
         }
       });
     }
@@ -98,6 +102,7 @@ export class AboutComponent implements OnInit {
           // And lastly refresh table
           this.refresh();
           this.createChart();
+          this.createBarChart();
         }
       });
     }
@@ -116,6 +121,7 @@ export class AboutComponent implements OnInit {
           this.dataService.dataChange.value.splice(foundIndex, 1);
           this.refresh();
           this.createChart();
+          this.createBarChart();
 
         }
       });
@@ -163,18 +169,62 @@ export class AboutComponent implements OnInit {
                   }
               }]
           },
-          plugins: {
-
-            colorschemes: {
-
-              scheme: 'brewer.Paired12'
-
-            }
-
+          title: {
+            display: true,
+            text: 'Category Expense for year 2020'
           }
       }
     });
   });
+  }
+
+
+  createBarChart(){
+    this.dataService.getMonthlyBudget(this.user.user_id).subscribe((response: any[]) => {
+      console.log(response);
+      var monthBudget = {
+        datasets: [
+            {
+                data: [],
+                backgroundColor: [],
+                label: 'Expense (USD)',
+            }
+        ],
+        labels: []
+    };
+
+      for(var i=0; i<response.length; i++){
+      monthBudget.datasets[0].data[i] = response[i].expense ;
+      monthBudget.datasets[0].backgroundColor[i]=this.dynamicColors();
+      monthBudget.labels[i] =  moment().year(response[i].year).month(response[i].month-1).format('MMM');
+    }
+      console.log(monthBudget.labels);
+      if (this.myBarChart) {
+        this.myBarChart.destroy();
+      }
+      var ctx = document.getElementById('myBarChart');
+      // tslint:disable-next-line: no-unused-expression
+      this.myBarChart = new Chart(document.getElementById('myBarChart'), {
+        type: 'bar',
+        data: monthBudget,
+        options: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: 'Monthly expense for year 2020'
+          },
+          scales: {
+            xAxes: [{
+                barPercentage: 0.4
+            }]
+        },
+        ticks: {
+          autoSkip: false,
+          maxTicksLimit: 20
+      }
+        }
+    });
+    });
   }
 
   dynamicColors = function() {
@@ -183,6 +233,7 @@ export class AboutComponent implements OnInit {
     var b = Math.floor(Math.random() * 255);
     return "rgb(" + r + "," + g + "," + b + ")";
 };
+
 
 
 }

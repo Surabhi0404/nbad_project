@@ -39,11 +39,15 @@ export class DataService {
     return this.http.post('http://localhost:3000/api/budget/add', data);
   }
 
-  signUpUser(data: any){
+  signUpUser(data: any):Observable<any>{
     return this.http.post('http://localhost:3000/api/signup', data);
   }
 
-  getCategory(user_id: string){
+  getCategory(user_id: string):Observable<any>{
     return this.http.get('http://localhost:3000/api/category/'+user_id);
+  }
+
+  getMonthlyBudget(user_id: string):Observable<any>{
+    return this.http.get('http://localhost:3000/api/month/budget/'+user_id);
   }
 }

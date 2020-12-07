@@ -79,12 +79,14 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-  <mat-paginator fxFlex="100" #paginatorRef [length]="5" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]">
+  <mat-paginator fxFlex="100" #paginatorRef [length]="3" [pageSize]="3" [pageSizeOptions]="[3]">
   </mat-paginator>
 
-  <mat-grid-list cols="2" rowHeight="2:1">
+  <mat-grid-list cols="2" rowHeight="2:1" gutterSize="5px">
+
     <mat-grid-tile><canvas id="myChart"></canvas></mat-grid-tile>
-    <mat-grid-tile>Chart 2</mat-grid-tile>
+
+    <mat-grid-tile><canvas id="myBarChart"></canvas></mat-grid-tile>
   </mat-grid-list>
 
 </div>

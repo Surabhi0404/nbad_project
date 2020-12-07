@@ -12,6 +12,7 @@ import { BudgetElement } from '../../../about/about.component';
 export class AddDialogComponent implements OnInit {
   @Input() max: any;
   tomorrow = new Date();
+  minDate = new Date(2020, 0, 1);
 
   constructor(public dialogRef: MatDialogRef<AddDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: BudgetElement,

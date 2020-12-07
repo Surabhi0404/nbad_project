@@ -136,6 +136,17 @@ app.get("/api/category/:user_id", async(req, res)=>{
 });
 });
 
+app.get("/api/month/budget/:user_id", async (req, res) => {
+  var sql = "SELECT DISTINCT month(budget_date) as month, SUM(expense) as expense, Year(curdate()) as year FROM budget_list WHERE user_id='"+req.params.user_id+"' GROUP  BY Month(budget_date) ORDER BY Month(budget_date) ASC";
+  pool.getConnection(function(err, connection) {
+    connection.query(sql, function (error, results, fields) {
+      connection.release();
+      if (error) throw error;
+      res.json(results);
+  });
+});
+});
+
 
 
 app.listen(port, () => {
