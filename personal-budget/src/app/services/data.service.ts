@@ -50,4 +50,8 @@ export class DataService {
   getMonthlyBudget(user_id: string):Observable<any>{
     return this.http.get('http://localhost:3000/api/month/budget/'+user_id);
   }
+
+  getCategoryExpense(user_id: string): Observable<any>{
+    return this.http.get('http://localhost:3000/api/month/expense/'+user_id);
+  }
 }

@@ -28,6 +28,7 @@ export class BudgetElement {
 export class AboutComponent implements OnInit {
   myPieChart;
   myBarChart;
+  myLineChart;
   @Input() user: any;
   displayedColumns: string[] = ['budget_id', 'title', 'expense', 'category', 'budget_date', 'actions'];
   dataSource: MatTableDataSource<BudgetElement>;
@@ -60,6 +61,7 @@ export class AboutComponent implements OnInit {
                this.dataSource.paginator = this.paginator;
                this.createChart();
                this.createBarChart();
+               this.createLineChart();
 
       }
 
@@ -80,6 +82,8 @@ export class AboutComponent implements OnInit {
           this.refresh();
           this.createChart();
           this.createBarChart();
+          this.createLineChart();
+
         }
       });
     }
@@ -90,7 +94,7 @@ export class AboutComponent implements OnInit {
       this.index = i;
       console.log(this.index);
       const dialogRef = this.dialog.open(EditDialogComponent, {
-        data: {budget_id: budget_id, title: title, expense: expense, category: category, budget_date: budget_date, user_id: this.user.user_id}
+        data: {budget_id, title, expense, category, budget_date, user_id: this.user.user_id}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -103,6 +107,8 @@ export class AboutComponent implements OnInit {
           this.refresh();
           this.createChart();
           this.createBarChart();
+          this.createLineChart();
+
         }
       });
     }
@@ -111,7 +117,7 @@ export class AboutComponent implements OnInit {
       this.index = i;
       this.id = budget_id;
       const dialogRef = this.dialog.open(DeleteDialogComponent, {
-        data: {budget_id: budget_id, title: title, expense: expense, category: category, budget_date: budget_date}
+        data: {budget_id, title, expense, category, budget_date}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -122,6 +128,8 @@ export class AboutComponent implements OnInit {
           this.refresh();
           this.createChart();
           this.createBarChart();
+          this.createLineChart();
+
 
         }
       });
@@ -135,7 +143,7 @@ export class AboutComponent implements OnInit {
        );
   }
   createChart() {
-    this.dataService.getCategory(this.user.user_id).subscribe((response : any[])=> {
+    this.dataService.getCategory(this.user.user_id).subscribe((response: any[]) => {
 
       this.budgetSource = {
         datasets: [
@@ -146,16 +154,16 @@ export class AboutComponent implements OnInit {
         ],
         labels: []
     };
-      for (var i = 0 ; i < response.length; i++) {
+      for (let i = 0 ; i < response.length; i++) {
       this.budgetSource.datasets[0].data[i] = response[i].expense;
       this.budgetSource.labels[i] = response[i].category;
-      this.budgetSource.datasets[0].backgroundColor[i]= this.dynamicColors();
+      this.budgetSource.datasets[0].backgroundColor[i] = this.dynamicColors();
   }
       if (this.myPieChart) {
     this.myPieChart.destroy();
   }
 
-      var ctx = document.getElementById('myChart');
+      let ctx = document.getElementById('myChart');
       this.myPieChart = new Chart (ctx, {
         type: 'pie',
         data: this.budgetSource,
@@ -182,7 +190,7 @@ export class AboutComponent implements OnInit {
   createBarChart(){
     this.dataService.getMonthlyBudget(this.user.user_id).subscribe((response: any[]) => {
       console.log(response);
-      var monthBudget = {
+      let monthBudget = {
         datasets: [
             {
                 data: [],
@@ -193,16 +201,16 @@ export class AboutComponent implements OnInit {
         labels: []
     };
 
-      for(var i=0; i<response.length; i++){
+      for (let i = 0; i < response.length; i++){
       monthBudget.datasets[0].data[i] = response[i].expense ;
-      monthBudget.datasets[0].backgroundColor[i]=this.dynamicColors();
-      monthBudget.labels[i] =  moment().year(response[i].year).month(response[i].month-1).format('MMM');
+      monthBudget.datasets[0].backgroundColor[i] = this.dynamicColors();
+      monthBudget.labels[i] =  moment().year(response[i].year).month(response[i].month - 1).format('MMM');
     }
       console.log(monthBudget.labels);
       if (this.myBarChart) {
         this.myBarChart.destroy();
       }
-      var ctx = document.getElementById('myBarChart');
+      let ctx = document.getElementById('myBarChart');
       // tslint:disable-next-line: no-unused-expression
       this.myBarChart = new Chart(document.getElementById('myBarChart'), {
         type: 'bar',
@@ -214,8 +222,18 @@ export class AboutComponent implements OnInit {
             text: 'Monthly expense for year 2020'
           },
           scales: {
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Expense (USD)'
+              }
+          }],
             xAxes: [{
-                barPercentage: 0.4
+                barPercentage: 0.4,
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Month'
+                }
             }]
         },
         ticks: {
@@ -227,11 +245,70 @@ export class AboutComponent implements OnInit {
     });
   }
 
+  createLineChart(){
+    this.dataService.getCategoryExpense(this.user.user_id).subscribe((response: any[]) => {
+      let categoryExpense = {
+        datasets: [
+            {
+                data: [],
+                backgroundColor: [],
+                fill: false,
+                label: 'Expense (USD)',
+            }
+        ],
+        labels: []
+    };
+
+      for (let i = 0; i < response.length; i++){
+      categoryExpense.datasets[0].data[i] = response[i].expense;
+      categoryExpense.labels[i] =  moment().year(2020).month(response[i].month - 1).format('MMM') +', '+ response[i].category,
+      // categoryExpense.datasets[0].label[i]=response[i].category;
+      categoryExpense.datasets[0].backgroundColor[i] = this.dynamicColors();
+    }
+      console.log(categoryExpense);
+      if (this.myLineChart) {
+        this.myLineChart.destroy();
+      }
+      // tslint:disable-next-line: no-unused-expression
+
+      this.myLineChart= new Chart(document.getElementById('myLineChart'), {
+      type: 'line',
+      data: categoryExpense,
+
+      options: {
+        title: {
+          display: true,
+          text: 'Monthly Expense for each Category'
+        },
+        legend: { display: false },
+        scales: {
+          yAxes: [{
+              stacked: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Expense (USD)'
+              }
+          }],
+          xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Month, Category'
+            }
+        }]
+      }
+      }
+
+    });
+
+
+    });
+  }
+
   dynamicColors = function() {
-    var r = Math.floor(Math.random() * 255);
-    var g = Math.floor(Math.random() * 255);
-    var b = Math.floor(Math.random() * 255);
-    return "rgb(" + r + "," + g + "," + b + ")";
+    let r = Math.floor(Math.random() * 255);
+    let g = Math.floor(Math.random() * 255);
+    let b = Math.floor(Math.random() * 255);
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
 };
 
 
