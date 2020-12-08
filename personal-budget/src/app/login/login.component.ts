@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit {
     this.isSignedIn = true;
     this.dataService.getUser(email).subscribe(res =>{
       this.currentUser=res;
-      console.log(this.currentUser);
     });
     }
   }

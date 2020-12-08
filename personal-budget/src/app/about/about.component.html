@@ -1,12 +1,5 @@
-
 <div>
   <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <!-- Position Column -->
-    <!-- <ng-container matColumnDef="budget_id">
-      <mat-header-cell *matHeaderCellDef [style.display]="'none'"> No. </mat-header-cell>
-      <mat-cell *matCellDef="let element" [style.display]="'none'"> {{element.budget_id}} </mat-cell>
-    </ng-container> -->
-
     <ng-container matColumnDef="budget_id">
       <mat-header-cell *matHeaderCellDef> No.</mat-header-cell>
       <mat-cell *matCellDef="let element; let i = index">
@@ -14,13 +7,13 @@
       </mat-cell>
     </ng-container>
 
-    <!-- Name Column -->
+    <!-- Title Column -->
     <ng-container matColumnDef="title">
       <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
     </ng-container>
 
-    <!-- Weight Column -->
+    <!-- Expense Column -->
     <ng-container matColumnDef="expense">
       <mat-header-cell *matHeaderCellDef> Expense </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.expense}} </mat-cell>
@@ -32,30 +25,13 @@
       <mat-cell *matCellDef="let element"> {{element.category}} </mat-cell>
     </ng-container>
 
-    <!-- Month Column -->
+    <!-- Budget Date Column -->
     <ng-container matColumnDef="budget_date">
       <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.budget_date | date: 'MM/dd/yyyy'}} </mat-cell>
     </ng-container>
 
-    <!-- Month Column -->
-    <!-- <ng-container matColumnDef="user_id">
-            <mat-header-cell *matHeaderCellDef> User ID </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.user_id}} </mat-cell>
-          </ng-container> -->
-
-    <!-- Symbol Column -->
-    <!-- <ng-container matColumnDef="symbol">
-            <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.edit}} </mat-cell>
-          </ng-container> -->
-
-    <!-- Symbol Column -->
-    <!-- <ng-container matColumnDef="symbol">
-            <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.delete}} </mat-cell>
-          </ng-container> -->
-    <!-- actions -->
+    <!--actions-->
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>
         <button mat-icon-button color="primary" (click)="addNew()">

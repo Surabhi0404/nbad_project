@@ -10,7 +10,7 @@ import { DataService } from 'src/app/services/data.service';
 export class DeleteDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DeleteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, public dataService: DataService) { }
+              @Inject(MAT_DIALOG_DATA) public data: any, public dataService: DataService) { }
 
   ngOnInit(): void {
   }

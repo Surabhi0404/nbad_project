@@ -17,12 +17,11 @@ export class AddDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<AddDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: BudgetElement,
               public dataService: DataService) {
-                this.tomorrow.setDate(this.tomorrow.getDate());
-              }
+    this.tomorrow.setDate(this.tomorrow.getDate());
+  }
 
   formControl = new FormControl('', [
     Validators.required
-    // Validators.email,
   ]);
 
   getErrorMessage() {
@@ -33,15 +32,14 @@ export class AddDialogComponent implements OnInit {
   }
 
   submit() {
-    // emppty stuff
-    }
+  }
 
-    onNoClick(): void {
-      this.dialogRef.close();
-    }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
-    public confirmAdd(): void {
-      this.dataService.addBudget(this.data).subscribe();
-    }
+  public confirmAdd(): void {
+    this.dataService.addBudget(this.data).subscribe();
+  }
 
 }

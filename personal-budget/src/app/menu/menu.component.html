@@ -9,14 +9,12 @@
     </button>
   </mat-menu>
   <ul>
-      <!-- <li><a [routerLink]="['/']">Home</a></li> Check this -->
-      <!-- <li><a [routerLink]="['/about']">About</a></li>
-      <li><a [routerLink]="['/contact']">Contact</a></li>
-      <li><a [routerLink]="['/login']">Login</a></li> -->
-      <li> <p>Welcome {{user.username}}!</p> </li>
-      <li> <p>{{user.email}}</p></li>
+    <li>
+      <p>Welcome {{user.username}}!</p>
+    </li>
+    <li>
+      <p>{{user.email}}</p>
+    </li>
   </ul>
 </nav>
 <pb-about [user]="user"></pb-about>
-
-

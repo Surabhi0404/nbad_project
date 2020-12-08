@@ -18,7 +18,6 @@ export class EditDialogComponent implements OnInit {
 
   formControl = new FormControl('', [
     Validators.required
-    // Validators.email,
   ]);
   ngOnInit(): void {
   }
@@ -28,7 +27,6 @@ export class EditDialogComponent implements OnInit {
     }
 
   submit() {
-    // emppty stuff
   }
 
   onNoClick(): void {

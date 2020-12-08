@@ -4,24 +4,18 @@
   <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
 
     <div class="form">
-      <!-- <mat-form-field color="accent">
-        <input matInput [readonly]="true" class="form-control" placeholder="Id" [(ngModel)]="data.budget_id" name="id" required>
-        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-      </mat-form-field> -->
-    </div>
-
-    <!--Textarea for demo purposes-->
-    <div class="form">
       <mat-form-field color="accent">
-        <textarea matInput #input class="form-control" placeholder="Title" [(ngModel)]="data.title" name="title" required ></textarea>
+        <textarea matInput #input class="form-control" placeholder="Title" [(ngModel)]="data.title" name="title"
+          required></textarea>
         <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>
 
-    <!--Contains mat-hint for characters count and has maxLengt set-->
+
     <div class="form">
       <mat-form-field color="accent">
-        <input matInput #inputstate type="number" class="example-right-align" placeholder="Expense" [(ngModel)]="data.expense" name="expense" required >
+        <input matInput #inputstate type="number" class="example-right-align" placeholder="Expense"
+          [(ngModel)]="data.expense" name="expense" required>
         <span matPrefix>$&nbsp;</span>
         <span matSuffix>.00</span>
         <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
@@ -29,31 +23,28 @@
     </div>
 
     <div class="form">
-        <mat-form-field color="accent">
-          <input matInput placeholder="Category" [(ngModel)]="data.category" name="category">
-        </mat-form-field>
+      <mat-form-field color="accent">
+        <input matInput placeholder="Category" [(ngModel)]="data.category" name="category">
+      </mat-form-field>
     </div>
 
     <div class="form">
       <mat-form-field color="accent">
-        <!-- <input matInput placeholder="Add Date" [(ngModel)]="data.add_date" name="add_date"> -->
 
-        <input matInput [matDatepicker]="picker1" [min]="minDate" [max]="tomorrow" placeholder="Date" [(ngModel)]="data.budget_date" name="budget_date">
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
+
+        <input matInput [matDatepicker]="picker1" [min]="minDate" [max]="tomorrow" placeholder="Date"
+          [(ngModel)]="data.budget_date" name="budget_date">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
       </mat-form-field>
 
 
     </div>
-<!--
-    <div class="form">
-      <mat-form-field color="accent">
-        <input matInput placeholder="Updated at" [(ngModel)]="data.updated_at" name="updated_at">
-      </mat-form-field>
-    </div> -->
+
 
     <div mat-dialog-actions>
-      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="stopEdit()">Save</button>
+      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1"
+        (click)="stopEdit()">Save</button>
       <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
     </div>
   </form>
