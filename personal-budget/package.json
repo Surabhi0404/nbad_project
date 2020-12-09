@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postbuild": "gulp compress"
   },
   "private": true,
   "dependencies": {
@@ -49,6 +50,9 @@
     "@types/jquery": "^3.5.4",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-gzip": "^1.4.2",
+    "gzipper": "^4.3.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
