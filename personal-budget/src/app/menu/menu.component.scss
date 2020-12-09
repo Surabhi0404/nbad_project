@@ -1,6 +1,6 @@
 nav.menu {
   width: 100%;
-  background-color: #4d5791;
+  background-color:hsla(120, 60%, 70%, 0.3);
   height: 44px;
   padding: 0 40px;
 }
@@ -20,7 +20,7 @@ nav.menu ul li a {
   line-height: 44px;
   font-size: 1.4em;
   text-decoration: none;
-  color: #fff;
+  color: rgb(0, 0, 0);
   margin: 0;
 
 }
@@ -32,7 +32,7 @@ nav.menu ul li p {
   font-size: 1.4em;
   text-decoration: none;
   box-align: center;
-  color: #fff;
+  color: rgb(0, 0, 0);
   margin: 0;
 }
 

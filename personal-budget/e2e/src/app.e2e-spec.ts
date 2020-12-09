@@ -8,9 +8,15 @@ describe('workspace-project App', () => {
     page = new AppPage();
   });
 
+  // Test to display welcome message
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('personal-budget app is running!');
+    expect(page.getTitleText()).toEqual('Personal Budget');
+  });
+
+  it('should display subtitle message', () => {
+    page.navigateTo();
+    expect(page.getSubTitleText()).toEqual('A personal-budget management app');
   });
 
   afterEach(async () => {
