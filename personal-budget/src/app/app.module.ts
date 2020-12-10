@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { AboutComponent } from './about/about.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { P404Component } from './p404/p404.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,7 +26,7 @@ import { AddDialogComponent } from './dialogs/add/add-dialog/add-dialog.componen
     MenuComponent,
     FooterComponent,
     HomepageComponent,
-    AboutComponent,
+    DashboardComponent,
     LoginComponent,
     P404Component,
     EditDialogComponent,

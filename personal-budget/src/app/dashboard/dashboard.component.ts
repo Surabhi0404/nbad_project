@@ -20,12 +20,12 @@ export class BudgetElement {
 }
 
 @Component({
-  selector: 'pb-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss']
+  selector: 'pb-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
 
-export class AboutComponent implements OnInit {
+export class DashboardComponent implements OnInit {
   myPieChart;
   myBarChart;
   myLineChart;

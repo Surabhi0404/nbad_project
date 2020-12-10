@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataService } from 'src/app/services/data.service';
-import { BudgetElement } from '../../../about/about.component';
+import { BudgetElement } from '../../../dashboard/dashboard.component';
 
 @Component({
   selector: 'pb-add-dialog',

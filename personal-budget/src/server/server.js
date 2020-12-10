@@ -213,9 +213,9 @@ app.get("/api/month/budget/:user_id", async (req, res) => {
 app.get("/api/month/expense/:user_id", async (req, res) => {
   try {
     var sql =
-      "SELECT DISTINCT category, expense, Month(budget_date) as month FROM budget_list  WHERE user_id='" +
+      "SELECT category, SUM(expense) as expense, Month(budget_date) as month FROM budget_list  WHERE user_id='" +
       req.params.user_id +
-      "' ORDER BY Month(budget_date) ASC";
+      "' GROUP BY category, Month(budget_date) ORDER BY Month(budget_date) ASC";
     pool.getConnection(function (err, connection) {
       connection.query(sql, function (error, results, fields) {
         connection.release();
