@@ -1,11 +1,20 @@
+'use strict';
 import { AppPage } from './app.po';
-import { browser, logging } from 'protractor';
+import { browser, logging, element, by } from 'protractor';
+import { Eyes, Target, BatchInfo, RectangleSize } from '@applitools/eyes-protractor';
 
 describe('workspace-project App', () => {
   let page: AppPage;
+  let eyes: Eyes;
+  beforeAll(() => {
+    browser.waitForAngularEnabled(false);
 
-  beforeEach(() => {
+  })
+  beforeEach(async () => {
     page = new AppPage();
+    eyes = new Eyes();
+    eyes.setApiKey('719m36SjRkH108zMLkvvWCrbwH7rND3vEqIBwcZeXy198110'); // 👈🏼 REPLACE ME!
+    eyes.setBatch(new BatchInfo('Personal Budget'))
   });
 
   // Test to display App Title
@@ -104,6 +113,25 @@ describe('workspace-project App', () => {
     page.navigateTo();
     expect(page.allowSignUp());
   });
+
+  // Applitools Visual Regression Testing
+  it('Smoke Test', async() => {
+    await eyes.open(browser, 'Personal Budget', 'Smoke Test', new RectangleSize(800, 600));
+    await browser.get('/');
+    await eyes.check("Personal Budget", Target.window().fully);
+    element(by.id('mat-tab-label-0-1')).click();
+    browser.sleep(200);
+    element(by.id('mat-input-2')).sendKeys(Math.random().toString(36).substring(7));
+    element(by.id('mat-input-3')).sendKeys(Math.random().toString(36).substring(7)+'@test.com');
+    element(by.id('mat-input-4')).sendKeys('abcdef');
+    element(by.id('mat-input-5')).sendKeys('abcdef');
+    browser.sleep(100);
+    element(by.css('pb-login button')).click();
+    await eyes.check("Dashboard", Target.window().fully);
+    const results = await eyes.close();
+    console.log(results);
+  });
+
 
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser

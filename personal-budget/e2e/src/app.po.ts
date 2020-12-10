@@ -87,8 +87,8 @@ export class AppPage {
   allowSignUp(): Promise<void>{
     element(by.id('mat-tab-label-0-1')).click();
     browser.sleep(200);
-    element(by.id('mat-input-2')).sendKeys('abcd');
-    element(by.id('mat-input-3')).sendKeys('abcdef@test.com');
+    element(by.id('mat-input-2')).sendKeys(Math.random().toString(36).substring(7));
+    element(by.id('mat-input-3')).sendKeys(Math.random().toString(36).substring(7)+'@test.com');
     element(by.id('mat-input-4')).sendKeys('abcdef');
     element(by.id('mat-input-5')).sendKeys('abcdef');
     browser.sleep(100);
