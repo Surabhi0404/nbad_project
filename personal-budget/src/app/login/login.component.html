@@ -1,10 +1,12 @@
 <div class="login-page" *ngIf="!isSignedIn">
+  <!--Semantice HTML added role-->
     <div class="alert alert-danger" role="alert" *ngIf="authError">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       {{authError?.message}}
     </div>
     <div class="hero">
-      <h1 [routerLink]="['/']">Personal Budget <span><img src="/assets/wallet.png" height="70px"></span></h1>
+      <!--A11y alt, aria-label-->
+      <h1 [routerLink]="['/']">Personal Budget <span><img src="/assets/wallet.png" height="70px" alt="App logo" aria-label="Wallet logo for the app"></span></h1>
       <h2>A personal-budget management app </h2>
 
     </div>

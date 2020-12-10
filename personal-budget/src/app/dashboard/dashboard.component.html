@@ -31,7 +31,7 @@
       <mat-cell *matCellDef="let element"> {{element.budget_date | date: 'MM/dd/yyyy'}} </mat-cell>
     </ng-container>
 
-    <!--actions-->
+    <!--actions--> <!--A11y by adding aria-label to buttons-->>
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>
         <button mat-icon-button color="primary" (click)="addNew()">

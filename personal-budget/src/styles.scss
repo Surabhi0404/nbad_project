@@ -203,6 +203,7 @@ button,
  * Remove the inner border and padding in Firefox.
  */
 
+//  Added focus for A11y
 button::-moz-focus-inner,
 [type="button"]::-moz-focus-inner,
 [type="reset"]::-moz-focus-inner,
