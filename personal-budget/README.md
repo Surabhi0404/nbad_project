@@ -25,3 +25,13 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Unit Test 
+
+1. Unit Test on add-dialog.component to check confirmAdd() method is invoked on button click -> src/dialogs/add/add-dialog.component.spec.ts
+2. Unit Test on delete-dialog.component to check confirmDelete() method is invoked on button click -> src/dialogs/delete/delete-dialog.component.spec.ts
+3. Unit Test on edit-dialog.component to check stopEdit() method is invoked on button click -> -> src/dialogs/edit/edit-dialog.component.spec.ts
+
+## e2e Testing
+
+e2e testing for home page ('/') -> e2e/src/app.po.ts and e2e/src/app.e2e-spec.ts
