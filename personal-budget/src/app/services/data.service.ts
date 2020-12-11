@@ -7,7 +7,7 @@ import { BudgetElement } from '../dashboard/dashboard.component';
   providedIn: 'root'
 })
 export class DataService {
-  private readonly API_URL = 'http://localhost:3000';
+  private readonly API_URL = 'http://159.65.239.243:3000';
   dataChange: BehaviorSubject<BudgetElement[]> = new BehaviorSubject<BudgetElement[]>([]);
   dialogData: any;
 
