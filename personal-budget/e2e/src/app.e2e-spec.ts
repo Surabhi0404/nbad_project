@@ -32,8 +32,7 @@ describe('workspace-project App', () => {
   // Test to check correct Image is displayed
   it('should display correct image', async () => {
     page.navigateTo();
-    const url = await browser.driver.getCurrentUrl();
-    expect(page.checkCorrectImage()).toEqual(url+'assets/wallet.png');
+    expect(page.checkCorrectImage()).toContain('assets/wallet.png');
   });
 
   // Test to check correct Title of SignIn/SignUp card

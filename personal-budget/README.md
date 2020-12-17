@@ -35,3 +35,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## e2e Testing
 
 e2e testing for home page ('/') -> e2e/src/app.po.ts and e2e/src/app.e2e-spec.ts
+
+## Applitools Visual Regression
+
+e2e/src/app.po.ts and e2e/src/app.e2e-spec.ts
+
